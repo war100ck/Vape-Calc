@@ -63,7 +63,7 @@ class TickSlider(QSlider):
 class VapeCalcApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QIcon(resource_path("app_icon.ico")))  # <-- фикс иконки окна
+        self.setWindowIcon(QIcon(resource_path("app_icon.ico")))
         self.setWindowTitle("Калькулятор ароматизатора - Vape DIY")
         self.setFixedSize(680, 470)
         self.setStyleSheet("""
@@ -216,7 +216,7 @@ class VapeCalcApp(QWidget):
 
 def main():
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(resource_path("app_icon.ico")))  # <-- Иконка будет работать в заголовке и в трее
+    app.setWindowIcon(QIcon(resource_path("app_icon.ico")))
     window = VapeCalcApp()
     window.show()
     sys.exit(app.exec())
