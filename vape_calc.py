@@ -1,8 +1,39 @@
 import sys
 import os
+import subprocess
+
+def install_missing_packages():
+    required_packages = {
+        'PyQt6': 'PyQt6'
+    }
+    
+    missing_packages = []
+    for package, import_name in required_packages.items():
+        try:
+            __import__(import_name)
+        except ImportError:
+            missing_packages.append(package)
+    
+    if missing_packages:
+        print(f"Установка недостающих модулей: {', '.join(missing_packages)}")
+        for package in missing_packages:
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+            except subprocess.CalledProcessError as e:
+                print(f"Ошибка при установке {package}: {e}")
+                sys.exit(1)
+        print("Модули успешно установлены. Перезапустите программу.")
+        sys.exit(0)
+
+# Проверяем и устанавливаем модули до всех остальных импортов
+if not hasattr(sys, 'frozen'):
+    install_missing_packages()
+
+# Теперь импортируем все остальные модули
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QSlider,
-    QPushButton, QLineEdit, QMessageBox, QGridLayout, QStyle, QStyleOptionSlider
+    QPushButton, QLineEdit, QGridLayout, QStyle, QStyleOptionSlider,
+    QMessageBox
 )
 from PyQt6.QtCore import Qt, QRect
 from PyQt6.QtGui import QPainter, QFont, QColor, QIcon
